@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout.html :: content">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+<body>
+<h1>Posts</h1>
+<div>
+    <a href="/posts/new">New Post</a>
+</div>
+<ul>
+    <li th:each="post : ${posts}">
+        <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a>
+        <span th:text="${post.createdAt}">Created At</span>
+    </li>
+</ul>
+</body>
+</html>

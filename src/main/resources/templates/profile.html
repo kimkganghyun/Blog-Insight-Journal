@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Setup</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <div class="left satisfy-regular">
+        <a href="/" class="navbar-link">Blog</a>
+    </div>
+</div>
+<div class="content">
+    <h1 class="satisfy-regular">프로필 설정</h1>
+    <form id="profileForm" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="username" name="username" th:value="${param.username}">
+
+        <label for="usernameDisplay">아이디:</label>
+        <input type="text" id="usernameDisplay" th:value="${param.username}" readonly><br>
+
+        <label for="profilePicture">프로필 사진:</label>
+        <input type="file" id="profilePicture" name="profilePicture"><br>
+
+        <label for="description">간단한 소개:</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <button type="submit">프로필 저장</button>
+    </form>
+</div>
+<script src="/js/profile.js"></script>
+</body>
+</html>
