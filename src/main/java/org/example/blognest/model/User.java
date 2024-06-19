@@ -15,16 +15,16 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 아이디
+    private Long userId; // 아이디
 
     @Column(unique = true, nullable = false)
-    private String username; // 사용자 이름
+    private String username; // 사용자 닉네임
 
     @Column(nullable = false)
     private String password; // 사용자 비밀번호
 
     @Column(nullable = false)
-    private String name; // 사용자 설명
+    private String name; // 사용자 닉네임
 
     @Column(nullable = false)
     private String email; // 사용자 이메일
@@ -37,6 +37,9 @@ public class User {
     private String blogTitle; // 블로그 제목 ( 기본값 : 사용자 아이디 )
 
     private boolean emailVerified; // 이메일 알림 설정
+
+    @Column(nullable = true)
+    private String description; // 사용자 자기 소개
 
     @OneToMany(mappedBy = "author")
     private List<Post> posts; // 사용자가 작성한 포스트 목록
@@ -52,7 +55,6 @@ public class User {
     )
     private Set<Role> roles; // 사용자의 역할 목록
 
-    @Column(nullable = true)
-    private String description; // 사용자 자기 소개
+
 
 }

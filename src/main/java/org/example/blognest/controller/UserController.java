@@ -45,9 +45,17 @@ public class UserController {
         return ResponseEntity.ok(userService.findByUsername(username));
     }
 
+    // 아이디 중복 확인 여부
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+        boolean exists = userService.usernameExists(username);
+        return ResponseEntity.ok(exists);
+    }
+
     // 이메일 존재 확인 여부
     @GetMapping("/check-email")
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+        boolean exists = userService.emailExists(email);
         return ResponseEntity.ok(userService.emailExists(email));
     }
 
@@ -61,11 +69,6 @@ public class UserController {
         return ResponseEntity.status(401).build();
     }
 
-    // 아이디 중복 확인 여부
-    @GetMapping("/check-username")
-    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
-        return ResponseEntity.ok(userService.usernameExists(username));
-    }
 
     private String saveProfilePicture(MultipartFile profilePicture) {
         String fileName = UUID.randomUUID().toString() + "_" + profilePicture.getOriginalFilename();
