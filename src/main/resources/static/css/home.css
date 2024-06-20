@@ -24,6 +24,7 @@ body {
 .navbar .right {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .navbar button {
@@ -39,10 +40,13 @@ body {
     background-color: #f0f0f0;
 }
 
+.navbar .img-button img {
+    vertical-align: middle;
+}
+
 .content {
     padding: 20px;
 }
-
 
 .satisfy-regular {
     font-family: "Satisfy", cursive;
@@ -55,9 +59,39 @@ body {
     text-decoration: none;
 }
 
-.img-button {
-    background: none;
-    border: none;
+.username {
+    font-size: 28px;
     cursor: pointer;
-    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+#userMenu:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
 }

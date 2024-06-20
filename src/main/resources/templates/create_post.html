@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 작성</title>
+    <link rel="stylesheet" th:href="@{/css/create_post.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/create_post.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div class="left satisfy-regular">
+        <a href="/" class="navbar-link">Blog</a>
+    </div>
+</div>
+<div class="content">
+    <h1>글 작성</h1>
+    <form id="postForm">
+        <input type="text" id="title" name="title" placeholder="제목" required>
+        <textarea id="content" name="content" placeholder="내용" required></textarea>
+        <input type="file" id="image" name="image">
+        <input type="text" id="tags" name="tags" placeholder="태그">
+        <button type="submit">작성</button>
+        <button type="button" onclick="publishPost()">즉시 출간</button>
+    </form>
+</div>
+</body>
+</html>

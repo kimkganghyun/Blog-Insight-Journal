@@ -14,7 +14,8 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(){
+    public String homePage(Model model) {
+        model.addAttribute("title", "Home");
         return "home";
     }
 
@@ -36,9 +37,9 @@ public class HomeController {
         return "posts";
     }
 
-    @GetMapping("/posts/new")
-    public String newPost(Model model) {
-        model.addAttribute("title", "New Post");
-        return "newPost";
+    @GetMapping("/posts/create")
+    public String createPostPage(Model model) {
+        model.addAttribute("title", "Create Post");
+        return "create_post";
     }
 }

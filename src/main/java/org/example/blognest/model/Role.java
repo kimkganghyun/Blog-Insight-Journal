@@ -6,15 +6,18 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"users"})
 @Table(name = "roles")
 public class Role {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "roles_id")
+    private Long rolesId;
 
     @Column(nullable = false, unique = true)
     private String name; // 역할 이름

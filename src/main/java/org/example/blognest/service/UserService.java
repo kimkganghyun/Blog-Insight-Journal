@@ -50,6 +50,7 @@ public class UserService {
     }
 
 
+
     // 프로필
     private String saveProfilePicture(MultipartFile profilePicture) {
         String fileName = UUID.randomUUID().toString() + "_" + profilePicture.getOriginalFilename();

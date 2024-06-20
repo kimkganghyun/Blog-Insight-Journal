@@ -7,18 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("homeButton").addEventListener("click", function(event) {
-                event.preventDefault();
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/home.js"></script>
 </head>
 <body>
 <div class="navbar">
     <div class="left satisfy-regular">
-        <a href="#" id="homeButton" class="navbar-link">Blog</a>
+        <a href="/" class="navbar-link">Blog</a>
     </div>
     <div class="right">
         <button class="img-button" onclick="location.href='/notifications'">
@@ -27,8 +23,21 @@
         <button class="img-button" onclick="location.href='/search'">
             <img src="/images/free-icon-search-710082.png" alt="검색" width="24" height="24">
         </button>
-        <button onclick="location.href='/login'">로그인</button>
-        <button onclick="location.href='/register'">회원가입</button>
+        <button id="newPostButton" style="display: none;" onclick="location.href='/posts/create'">새 글 작성</button>
+        <div id="authButtons">
+            <button onclick="location.href='/login'">로그인</button>
+            <button onclick="location.href='/register'">회원가입</button>
+        </div>
+        <div id="userMenu" class="dropdown" style="display: none;">
+            <span id="usernameDisplay" class="username"></span>
+            <div class="dropdown-content" id="userDropdown">
+                <a href="/my-blog">내 블로그</a>
+                <a href="#" onclick="showTemporaryPosts()">임시 글</a>
+                <a href="#" onclick="showReadLaterPosts()">읽기 목록</a>
+                <a href="#" onclick="showSettings()">설정</a>
+                <a href="#" onclick="logout()">로그아웃</a>
+            </div>
+        </div>
     </div>
 </div>
 <div class="content">

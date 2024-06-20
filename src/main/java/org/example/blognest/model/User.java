@@ -14,7 +14,9 @@ import java.util.Set;
 @ToString(exclude = {"posts", "follows", "roles"})
 @Table(name = "users")
 public class User {
+
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId; // 아이디
 
     @Column(unique = true, nullable = false)

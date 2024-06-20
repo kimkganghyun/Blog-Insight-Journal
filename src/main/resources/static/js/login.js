@@ -1,42 +1,40 @@
 function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    if (!username || !password) {
-        Swal.fire({
-            icon: 'error',
-            title: '오류',
-            text: 'ID와 PW를 입력하세요.',
-        });
-        return;
-    }
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
     fetch("/users/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify({username, password})
+        body: new URLSearchParams({
+            username: username,
+            password: password
+        })
     })
         .then(response => {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error("로그인 실패");
+                return response.json().then(error => {
+                    throw new Error(error.message || '로그인 실패');
+                });
             }
         })
         .then(data => {
             Swal.fire({
                 icon: 'success',
                 title: '로그인 성공',
+                showConfirmButton: false,
+                timer: 1500
             }).then(() => {
-                window.location.href = "/home"; // 로그인 후 이동할 페이지
+                location.href = data.redirectUrl;
             });
         })
         .catch(error => {
             Swal.fire({
                 icon: 'error',
-                title: '로그인 실패',
+                title: '오류',
                 text: error.message,
             });
         });

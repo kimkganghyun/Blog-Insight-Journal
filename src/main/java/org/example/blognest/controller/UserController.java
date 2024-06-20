@@ -1,5 +1,6 @@
 package org.example.blognest.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.blognest.model.User;
 import org.example.blognest.service.UserService;
@@ -38,7 +39,6 @@ public class UserController {
         }
     }
 
-
     // 사용자 이름 찾기
     @GetMapping("/find")
     public ResponseEntity<Optional<User>> findByUsername(@RequestParam String username) {
@@ -56,19 +56,28 @@ public class UserController {
     @GetMapping("/check-email")
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
         boolean exists = userService.emailExists(email);
-        return ResponseEntity.ok(userService.emailExists(email));
+        return ResponseEntity.ok(exists);
     }
 
     // 로그인 처리
-    @PostMapping("login")
-    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password, HttpSession session) {
         Optional<User> user = userService.findByUsername(username);
         if (user.isPresent() && user.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(user.get());
+            session.setAttribute("loggedInUser", user.get().getUsername());
+            Map<String, String> response = new HashMap<>();
+            response.put("redirectUrl", "/home");
+            return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(401).build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인 실패"));
     }
 
+    // 로그아웃 처리
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok().build();
+    }
 
     private String saveProfilePicture(MultipartFile profilePicture) {
         String fileName = UUID.randomUUID().toString() + "_" + profilePicture.getOriginalFilename();
@@ -111,7 +120,12 @@ public class UserController {
         }
     }
 
-
-
-
+    // 현재 로그인된 사용자 정보 가져오기
+    @GetMapping("/loggedInUser")
+    public ResponseEntity<Map<String, String>> getLoggedInUser(HttpSession session) {
+        String loggedInUser = (String) session.getAttribute("loggedInUser");
+        Map<String, String> response = new HashMap<>();
+        response.put("username", loggedInUser);
+        return ResponseEntity.ok(response);
+    }
 }
