@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostController {
 
     private final PostService postService;
@@ -74,11 +74,22 @@ public class PostController {
         }
     }
 
+    // 임시 글 목록 가져오기
+    @GetMapping("/drafts")
+    public ResponseEntity<List<Post>> getDrafts(@RequestParam String username) {
+        Optional<User> user = userService.findByUsername(username);
+        if (user.isPresent()) {
+            List<Post> drafts = postService.getDraftsByAuthor(user.get());
+            return ResponseEntity.ok(drafts);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
     // 모든 포스트 가져오기
     @GetMapping("/all")
     public ResponseEntity<List<Post>> getAllPosts() {
         List<Post> posts = postService.getAllPosts();
         return ResponseEntity.ok(posts);
     }
-
 }

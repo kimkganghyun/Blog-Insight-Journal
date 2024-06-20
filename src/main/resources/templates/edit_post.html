@@ -2,28 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>글 작성</title>
+    <title>글 수정</title>
     <link rel="stylesheet" th:href="@{/css/create_post.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/create_post.js"></script>
+    <script src="/js/edit_post.js"></script>
 </head>
 <body>
 <div class="navbar">
-    <div class="left satisfy-regular">
-        <!-- Remove the Blog link -->
-    </div>
-    <!-- Remove authButtons and userMenu divs -->
+    <div class="left satisfy-regular"></div>
 </div>
 <div class="content">
-    <h1>글 작성</h1>
-    <form id="postForm">
+    <h1>글 수정</h1>
+    <form id="editPostForm">
         <input type="text" id="title" name="title" placeholder="제목" required>
         <textarea id="content" name="content" placeholder="내용" required></textarea>
         <input type="file" id="image" name="image">
         <input type="text" id="tags" name="tags" placeholder="태그">
-        <button type="button" onclick="saveDraft()">임시 저장</button>
+        <button type="submit">수정</button>
         <button type="button" onclick="publishPost()">출간하기</button>
+        <button type="button" onclick="saveDraft()">임시 저장</button>
     </form>
 </div>
 </body>

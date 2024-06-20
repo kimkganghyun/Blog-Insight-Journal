@@ -37,15 +37,18 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-
     // 작성자 포스트 목록 가져오기
     public List<Post> getPostsByAuthor(User author) {
         return postRepository.findByAuthor(author);
     }
 
-    // 모든 포스터 가져오기
+    // 모든 포스트 가져오기
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
+    // 임시 저장된 포스트 목록 가져오기
+    public List<Post> getDraftsByAuthor(User author) {
+        return postRepository.findByAuthorAndDraftTrue(author);
+    }
 }

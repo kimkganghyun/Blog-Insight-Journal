@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const userMenu = document.getElementById("userMenu");
     const usernameDisplay = document.getElementById("usernameDisplay");
 
-    // 로그인된 사용자 이름을 서버에서 가져오기
     fetch("/users/loggedInUser")
         .then(response => response.json())
         .then(data => {
@@ -11,26 +10,58 @@ document.addEventListener("DOMContentLoaded", function() {
                 usernameDisplay.textContent = data.username + "님";
                 authButtons.style.display = "none";
                 userMenu.style.display = "inline-block";
-                document.getElementById("newPostButton").style.display = "inline-block";
+                loadDrafts(data.username);
+            } else {
+                location.href = '/login';
             }
         })
         .catch(error => {
             console.error("Error fetching logged in user:", error);
+            location.href = '/login';
         });
 
-    // 드롭다운 메뉴 토글
     userMenu.addEventListener("click", function(event) {
         event.stopPropagation();
         const dropdownMenu = document.getElementById("userDropdown");
         dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
     });
 
-    // 페이지 외부 클릭 시 드롭다운 메뉴 닫기
     window.addEventListener("click", function() {
         const dropdownMenu = document.getElementById("userDropdown");
         dropdownMenu.style.display = "none";
     });
 });
+
+function loadDrafts(username) {
+    fetch(`/api/posts/drafts?username=${username}`)
+        .then(response => response.json())
+        .then(data => {
+            const draftsContainer = document.getElementById("draftsContainer");
+            draftsContainer.innerHTML = "";
+            data.forEach(post => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("draft-post");
+
+                const titleElement = document.createElement("h2");
+                titleElement.textContent = post.title;
+                postElement.appendChild(titleElement);
+
+                const contentElement = document.createElement("p");
+                contentElement.textContent = post.content;
+                postElement.appendChild(contentElement);
+
+                const editLink = document.createElement("a");
+                editLink.href = `/posts/edit/${post.id}`;
+                editLink.textContent = "수정";
+                postElement.appendChild(editLink);
+
+                draftsContainer.appendChild(postElement);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching drafts:", error);
+        });
+}
 
 function logout() {
     fetch("/users/logout", {

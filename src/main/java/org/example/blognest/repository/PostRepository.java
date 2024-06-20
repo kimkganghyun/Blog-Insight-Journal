@@ -15,4 +15,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 제목을 포함한 포스트 목록 찾기
     List<Post> findByTitleContaining(String title);
+
+    // 임시글 목록 찾기
+    List<Post> findByAuthorAndDraftTrue(User author);
+
+
 }

@@ -2,20 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>임시 글 목록</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/home.js"></script>
+    <script src="/js/drafts.js"></script>
 </head>
 <body>
 <div class="navbar">
     <div class="left satisfy-regular">
         <a href="/" class="navbar-link">Blog</a>
     </div>
+    <div class="left satisfy-regular"></div>
     <div class="right">
         <button class="img-button" onclick="location.href='/notifications'">
             <img src="/images/free-icon-alarm-bell-1059063.png" alt="알람" width="24" height="24">
@@ -23,7 +24,7 @@
         <button class="img-button" onclick="location.href='/search'">
             <img src="/images/free-icon-search-710082.png" alt="검색" width="24" height="24">
         </button>
-        <button id="newPostButton" style="display: none;" onclick="location.href='/posts/create'">새 글 작성</button>
+        <button id="newPostButton" style="display: none;" onclick="location.href='/posts/create-post'">새 글 작성</button>
         <div id="authButtons">
             <button onclick="location.href='/login'">로그인</button>
             <button onclick="location.href='/register'">회원가입</button>
@@ -41,8 +42,8 @@
     </div>
 </div>
 <div class="content">
-    <h1>Welcome to BlogNest</h1>
-    <p>This is the home page.</p>
+    <h1>임시 글 목록</h1>
+    <div id="draftsContainer"></div>
 </div>
 </body>
 </html>

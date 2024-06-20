@@ -31,15 +31,15 @@ public class HomeController {
         return "register";
     }
 
-    @GetMapping("/posts")
-    public String posts(Model model) {
-        model.addAttribute("title", "Posts");
-        return "posts";
-    }
-
     @GetMapping("/posts/create")
     public String createPostPage(Model model) {
         model.addAttribute("title", "Create Post");
         return "create_post";
+    }
+
+    @GetMapping("/posts/drafts")
+    public String draftsPage(Model model) {
+        model.addAttribute("title", "Drafts");
+        return "drafts";
     }
 }

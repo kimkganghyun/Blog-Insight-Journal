@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const postForm = document.getElementById("postForm");
+    const postId = window.location.pathname.split("/").pop();
+    loadPost(postId);
 
-    postForm.addEventListener("submit", function(event) {
+    const editPostForm = document.getElementById("editPostForm");
+
+    editPostForm.addEventListener("submit", function(event) {
         event.preventDefault();
-        const formData = new FormData(postForm);
+        const formData = new FormData(editPostForm);
         const post = {
             title: formData.get("title"),
             content: formData.get("content"),
@@ -12,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
             publicPost: false,
         };
 
-        fetch("/api/posts/create", {
-            method: "POST",
+        fetch(`/api/posts/update/${postId}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -26,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    location.href = '/home';
+                    location.href = '/posts/drafts';
                 });
             }).catch(error => {
             console.error("Error saving post:", error);
@@ -39,8 +42,26 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+function loadPost(postId) {
+    fetch(`/api/posts/${postId}`)
+        .then(response => response.json())
+        .then(post => {
+            document.getElementById("title").value = post.title;
+            document.getElementById("content").value = post.content;
+            document.getElementById("tags").value = post.tags;
+        })
+        .catch(error => {
+            console.error("Error loading post:", error);
+            Swal.fire({
+                icon: 'error',
+                title: '오류',
+                text: '글 로딩 실패'
+            });
+        });
+}
+
 function saveDraft() {
-    const formData = new FormData(document.getElementById("postForm"));
+    const formData = new FormData(document.getElementById("editPostForm"));
     const post = {
         title: formData.get("title"),
         content: formData.get("content"),
@@ -49,8 +70,8 @@ function saveDraft() {
         publicPost: false,
     };
 
-    fetch("/api/posts/create", {
-        method: "POST",
+    fetch(`/api/posts/update/${postId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
@@ -63,10 +84,10 @@ function saveDraft() {
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                location.href = '/home';
+                location.href = '/posts/drafts';
             });
         }).catch(error => {
-        console.error("Error saving post:", error);
+        console.error("Error saving draft:", error);
         Swal.fire({
             icon: 'error',
             title: '오류',
@@ -76,7 +97,7 @@ function saveDraft() {
 }
 
 function publishPost() {
-    const formData = new FormData(document.getElementById("postForm"));
+    const formData = new FormData(document.getElementById("editPostForm"));
     const post = {
         title: formData.get("title"),
         content: formData.get("content"),
@@ -85,8 +106,8 @@ function publishPost() {
         publicPost: true,
     };
 
-    fetch("/api/posts/create", {
-        method: "POST",
+    fetch(`/api/posts/update/${postId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
@@ -99,7 +120,7 @@ function publishPost() {
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                location.href = '/home';
+                location.href = '/posts/drafts';
             });
         }).catch(error => {
         console.error("Error publishing post:", error);
