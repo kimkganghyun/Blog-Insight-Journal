@@ -50,10 +50,12 @@ function loadDrafts(username) {
                 contentElement.textContent = post.content;
                 postElement.appendChild(contentElement);
 
-                const editLink = document.createElement("a");
-                editLink.href = `/posts/edit/${post.id}`;
-                editLink.textContent = "수정";
-                postElement.appendChild(editLink);
+                const editButton = document.createElement("button");
+                editButton.textContent = "수정";
+                editButton.addEventListener("click", function() {
+                    location.href = `/edit-post/${post.postId}`;
+                });
+                postElement.appendChild(editButton);
 
                 draftsContainer.appendChild(postElement);
             });
@@ -61,33 +63,4 @@ function loadDrafts(username) {
         .catch(error => {
             console.error("Error fetching drafts:", error);
         });
-}
-
-function logout() {
-    fetch("/users/logout", {
-        method: "POST"
-    }).then(response => {
-        if (response.ok) {
-            Swal.fire({
-                icon: 'success',
-                title: '로그아웃 성공',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                location.href = '/home';
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: '오류',
-                text: '로그아웃 실패',
-            });
-        }
-    }).catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: '오류',
-            text: '로그아웃 실패: ' + error.message,
-        });
-    });
 }

@@ -40,9 +40,10 @@
         </div>
     </div>
 </div>
-<div class="content">
-    <h1>Welcome to BlogNest</h1>
-    <p>This is the home page.</p>
+<h1>출간된 글 목록</h1>
+<div th:each="post : ${posts}">
+    <h2 th:text="${post.title}">제목</h2>
+    <p th:text="${post.content}">내용</p>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package org.example.blognest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(exclude = {"comments", "likes", "tags"})
 @Table(name = "posts")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,4 +59,14 @@ public class Post {
 
     @Column(nullable = false)
     private boolean draft; // 임시 저장 여부
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

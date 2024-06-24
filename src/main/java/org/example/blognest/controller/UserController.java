@@ -69,7 +69,7 @@ public class UserController {
             response.put("redirectUrl", "/home");
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인 실패"));
+        return ResponseEntity.status(401).body(Map.of("message", "로그인 실패"));
     }
 
     // 로그아웃 처리

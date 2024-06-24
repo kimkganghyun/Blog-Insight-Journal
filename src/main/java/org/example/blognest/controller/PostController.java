@@ -21,7 +21,7 @@ public class PostController {
 
     // 새로운 포스트 작성
     @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody Post post, @RequestParam String username) {
+    public ResponseEntity<Post> createPost(@RequestBody Post post, @SessionAttribute("loggedInUser") String username) {
         Optional<User> user = userService.findByUsername(username);
         if (user.isPresent()) {
             post.setAuthor(user.get());
@@ -34,7 +34,7 @@ public class PostController {
 
     // 포스트 수정
     @PutMapping("/update/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post postDetails) {
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post postDetails, @SessionAttribute("loggedInUser") String username) {
         Optional<Post> post = postService.getPostById(id);
         if (post.isPresent()) {
             Post updatedPost = post.get();
@@ -76,7 +76,7 @@ public class PostController {
 
     // 임시 글 목록 가져오기
     @GetMapping("/drafts")
-    public ResponseEntity<List<Post>> getDrafts(@RequestParam String username) {
+    public ResponseEntity<List<Post>> getDrafts(@SessionAttribute("loggedInUser") String username) {
         Optional<User> user = userService.findByUsername(username);
         if (user.isPresent()) {
             List<Post> drafts = postService.getDraftsByAuthor(user.get());
@@ -84,6 +84,13 @@ public class PostController {
         } else {
             return ResponseEntity.status(404).body(null);
         }
+    }
+
+    // 출간된 글 목록 가져오기
+    @GetMapping("/published")
+    public ResponseEntity<List<Post>> getPublishedPosts() {
+        List<Post> posts = postService.getPublishedPosts();
+        return ResponseEntity.ok(posts);
     }
 
     // 모든 포스트 가져오기

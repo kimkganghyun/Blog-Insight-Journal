@@ -48,4 +48,14 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Comment parent;  // 부모 댓글
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

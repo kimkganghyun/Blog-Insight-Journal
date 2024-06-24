@@ -51,4 +51,10 @@ public class PostService {
     public List<Post> getDraftsByAuthor(User author) {
         return postRepository.findByAuthorAndDraftTrue(author);
     }
+
+    // 출간된 글 목록 가져오기
+    public List<Post> getPublishedPosts() {
+        return postRepository.findByPublishedTrue();
+    }
 }
+

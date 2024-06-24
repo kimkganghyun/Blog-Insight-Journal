@@ -19,5 +19,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 임시글 목록 찾기
     List<Post> findByAuthorAndDraftTrue(User author);
 
+    // 출간된 글 목록 찾기
+    List<Post> findByPublishedTrue();
 
 }
